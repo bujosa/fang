@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
-import { UserController } from './user.controller';
+import { DynamoDBModule } from '@database/dynamo_db.module';
 
 @Module({
+  imports: [DynamoDBModule],
   controllers: [UserController],
-  providers: [UserService]
+  providers: [UserService],
 })
 export class UserModule {}

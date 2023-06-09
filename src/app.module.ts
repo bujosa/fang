@@ -6,6 +6,7 @@ import { UserModule } from './user/user.module';
   imports: [
     DevtoolsModule.register({
       http: process.env.NODE_ENV !== 'production',
+      port: 3001,
     }),
     UserModule,
   ],
