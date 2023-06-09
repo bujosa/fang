@@ -1,5 +1,12 @@
 # fang
+
 This is a simple project using NestJS + DynamoDB
+
+## Documentation
+
+- [NestJS](https://docs.nestjs.com/)
+- [DynamoDB](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Introduction.html)
+- [@aws-sdk/client-dynamodb](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/GettingStarted.html)
 
 ## Description
 
