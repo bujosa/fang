@@ -16,6 +16,12 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@database/": ["src/database/"],
+      "@database/*": ["src/database/*"],
+      "@packages/": ["src/packages/"],
+      "@packages/*": ["src/packages/*"]
+    }
   }
 }
