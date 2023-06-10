@@ -1,15 +1,14 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import {
   CreateTableCommand,
-  CreateTableInput,
   DeleteItemInput,
   DeleteItemOutput,
-  DynamoDB,
   DynamoDBClient,
   GetItemInput,
   GetItemOutput,
   PutItemInput,
   PutItemOutput,
+  QueryCommand,
   QueryInput,
   QueryOutput,
   UpdateItemInput,
@@ -20,6 +19,7 @@ import {
   PutCommand,
   GetCommand,
   UpdateCommand,
+  DeleteCommand,
 } from '@aws-sdk/lib-dynamodb';
 
 @Injectable()
@@ -71,11 +71,11 @@ export class DynamoDBService implements OnModuleInit {
     return this.doClient.send(new UpdateCommand(params));
   }
 
-  // async delete(params: DeleteItemInput): Promise<DeleteItemOutput> {
-  //   return this.client.deleteItem(params);
-  // }
+  async delete(params: DeleteItemInput): Promise<DeleteItemOutput> {
+    return this.doClient.send(new DeleteCommand(params));
+  }
 
-  // async query(params: QueryInput): Promise<QueryOutput> {
-  //   return this.client.query(params);
-  // }
+  async query(params: QueryInput): Promise<QueryOutput> {
+    return this.client.send(new QueryCommand(params));
+  }
 }
