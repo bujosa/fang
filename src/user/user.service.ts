@@ -40,4 +40,28 @@ export class UserService {
 
     await this._dynamoDBService.create(params);
   }
+
+  async updateUser(user: User): Promise<User> {
+    const tableName = 'Users';
+
+    const params: DynamoDB.DocumentClient.UpdateItemInput = {
+      TableName: tableName,
+      Key: {
+        id: user.id,
+      },
+      UpdateExpression: 'set #name = :name, #email = :email',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#email': 'email',
+      },
+      ExpressionAttributeValues: {
+        ':name': user.name,
+        ':email': user.email,
+      },
+
+      ReturnValues: 'UPDATED_NEW',
+    };
+
+    return this._dynamoDBService.update(params) as unknown as User;
+  }
 }

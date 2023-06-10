@@ -19,6 +19,7 @@ import {
   DynamoDBDocumentClient,
   PutCommand,
   GetCommand,
+  UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
 
 @Injectable()
@@ -66,9 +67,9 @@ export class DynamoDBService implements OnModuleInit {
     return this.doClient.send(new GetCommand(params));
   }
 
-  // async update(params: UpdateItemInput): Promise<UpdateItemOutput> {
-  //   return this.client.updateItem(params);
-  // }
+  async update(params: UpdateItemInput): Promise<UpdateItemOutput> {
+    return this.doClient.send(new UpdateCommand(params));
+  }
 
   // async delete(params: DeleteItemInput): Promise<DeleteItemOutput> {
   //   return this.client.deleteItem(params);
