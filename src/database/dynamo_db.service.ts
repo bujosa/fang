@@ -78,4 +78,8 @@ export class DynamoDBService implements OnModuleInit {
   async query(params: QueryInput): Promise<QueryOutput> {
     return this.client.send(new QueryCommand(params));
   }
+
+  async scan(params: QueryInput): Promise<QueryOutput> {
+    return this.client.send(new QueryCommand(params));
+  }
 }

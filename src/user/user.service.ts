@@ -64,4 +64,29 @@ export class UserService {
 
     return this._dynamoDBService.update(params) as unknown as User;
   }
+
+  async deleteUser(id: string): Promise<void> {
+    const tableName = 'Users';
+
+    const params: DynamoDB.DocumentClient.DeleteItemInput = {
+      TableName: tableName,
+      Key: {
+        id: id,
+      },
+    };
+
+    await this._dynamoDBService.delete(params);
+  }
+
+  async getAllUsers(): Promise<User[]> {
+    const tableName = 'Users';
+
+    const params: DynamoDB.DocumentClient.ScanInput = {
+      TableName: tableName,
+    };
+
+    const result = await this._dynamoDBService.scan(params);
+
+    return result.Items as unknown as User[];
+  }
 }
