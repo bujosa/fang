@@ -3,6 +3,7 @@ import { DynamoDBService } from '@database/dynamo_db.service';
 import { DynamoDB } from 'aws-sdk';
 import { User } from './user.model';
 import { generateId } from '@packages/index';
+import { getUpdateItemInputFormat } from '@packages/functions/get_update_item_input_format';
 
 @Injectable()
 export class UserService {
@@ -41,28 +42,10 @@ export class UserService {
     await this._dynamoDBService.create(params);
   }
 
-  async updateUser(user: User): Promise<User> {
-    const tableName = 'Users';
-
-    const params: DynamoDB.DocumentClient.UpdateItemInput = {
-      TableName: tableName,
-      Key: {
-        id: user.id,
-      },
-      UpdateExpression: 'set #name = :name, #email = :email',
-      ExpressionAttributeNames: {
-        '#name': 'name',
-        '#email': 'email',
-      },
-      ExpressionAttributeValues: {
-        ':name': user.name,
-        ':email': user.email,
-      },
-
-      ReturnValues: 'UPDATED_NEW',
-    };
-
-    return this._dynamoDBService.update(params) as unknown as User;
+  async updateUser(id: string, user: User): Promise<User> {
+    return this._dynamoDBService.update(
+      getUpdateItemInputFormat('Users', id, user as any),
+    ) as unknown as User;
   }
 
   async deleteUser(id: string): Promise<void> {
