@@ -11,6 +11,8 @@ import {
   QueryCommand,
   QueryInput,
   QueryOutput,
+  ScanCommand,
+  ScanInput,
   UpdateItemInput,
   UpdateItemOutput,
 } from '@aws-sdk/client-dynamodb';
@@ -79,7 +81,20 @@ export class DynamoDBService implements OnModuleInit {
     return this.client.send(new QueryCommand(params));
   }
 
-  async scan(params: QueryInput): Promise<QueryOutput> {
-    return this.client.send(new QueryCommand(params));
+  async scan(params: ScanInput): Promise<any> {
+    const result = await this.client.send(new ScanCommand(params));
+
+    const items = result.Items.map((item) => {
+      const transformedItem: Record<string, unknown> = {};
+
+      for (const [key, value] of Object.entries(item)) {
+        const dataType = Object.keys(value)[0];
+        transformedItem[key] = value[dataType];
+      }
+
+      return transformedItem;
+    });
+
+    return items;
   }
 }
