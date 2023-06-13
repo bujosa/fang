@@ -19,11 +19,7 @@ export class UserService {
       },
     };
 
-    console.log(params);
-
     const result = await this._dynamoDBService.get(params);
-
-    console.log(result);
 
     return result.Item as unknown as User;
   }
@@ -68,8 +64,6 @@ export class UserService {
       TableName: tableName,
     };
 
-    const result = await this._dynamoDBService.scan(params);
-
-    return result.Items as unknown as User[];
+    return this._dynamoDBService.scan(params);
   }
 }
